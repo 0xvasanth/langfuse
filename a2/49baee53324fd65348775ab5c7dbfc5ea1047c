@@ -1,0 +1,56 @@
+web/src/features/filters/components/multi-select.tsx
+  s_a9dd7c06ea70a1::t_b0b5cbcdc2455f 89-93
+  s_a9dd7c06ea70a1::t_3fcc9f39076143 307
+  s_a9dd7c06ea70a1::t_736568fabf3cce 213
+  s_a9dd7c06ea70a1::t_4c0df8abf8ab01 33-40
+  s_a9dd7c06ea70a1::t_9c43ab461b09ed 53,64-71
+  s_a9dd7c06ea70a1::t_7c14e00359f7fb 309
+  s_a9dd7c06ea70a1::t_c0db2f98635da7 323
+  s_a9dd7c06ea70a1::t_c366a7371fcaa8 324-325
+  s_a9dd7c06ea70a1::t_da93a500303d05 87,96-98,103,105,109
+  s_a9dd7c06ea70a1::t_3fb98257224f47 123-125
+  s_a9dd7c06ea70a1::t_a614c4a2ecd509 119-121
+web/src/features/filters/hooks/useFilterState.clienttest.ts
+  s_a9dd7c06ea70a1::t_2fb5c0a14b4fff 69,73-77
+  s_a9dd7c06ea70a1::t_ffa14eb0559d3e 58-60,62-68,70-71,80-82
+  s_a9dd7c06ea70a1::t_2355ff366fed3f 72,78-79
+  s_a9dd7c06ea70a1::t_228a88cb23ae3b 55-57,61
+  s_a9dd7c06ea70a1::t_48d47c34062379 1-54,83-84
+web/src/features/filters/components/filter-builder.tsx
+  s_a9dd7c06ea70a1::t_2241d5ca75dcc3 1006
+web/src/features/filters/hooks/useFilterState.ts
+  s_a9dd7c06ea70a1::t_94adc9e5bd3626 100-102
+  s_a9dd7c06ea70a1::t_80c664e23f6d90 95
+  s_a9dd7c06ea70a1::t_73dbcc1e222e7f 39
+  s_a9dd7c06ea70a1::t_cc7b034227cd0c 88-94
+web/src/features/filters/components/multi-select.clienttest.tsx
+  s_a9dd7c06ea70a1::t_80c664e23f6d90 287-290
+  s_a9dd7c06ea70a1::t_55d6a548063699 125,178,224,247
+  s_a9dd7c06ea70a1::t_792f6f37c41812 152
+  s_a9dd7c06ea70a1::t_efc9a7cb0094f1 65-67
+  s_a9dd7c06ea70a1::t_56c16fe43a1574 139-141,156,160,165-177,179-191
+  s_a9dd7c06ea70a1::t_bed7a402a8ebe5 1-32,34-64,68-82,90-91,101-114,262-274,311
+  s_a9dd7c06ea70a1::t_af6b83ecf178d8 33
+  s_a9dd7c06ea70a1::t_eb896d22e33a30 142-151,153-155,157-159,161-164
+  s_a9dd7c06ea70a1::t_dab93290ce2895 115-124,126-129,133-138,192-213
+  s_a9dd7c06ea70a1::t_0a637cd9e7646a 275-286,291-310
+  s_a9dd7c06ea70a1::t_85edb7a28d0da6 83-89,92-100
+  s_a9dd7c06ea70a1::t_c39f4106bb0502 130-132
+  s_a9dd7c06ea70a1::t_514f8d64984ea8 214-223,225-246,248-261
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "a249baee53324fd65348775ab5c7dbfc5ea1047c",
+  "prompts": {},
+  "sessions": {
+    "s_a9dd7c06ea70a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24df9dec-5854-45cf-8fc4-bd6edc1ebc81",
+        "model": "claude-opus-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
