@@ -1,0 +1,27 @@
+web/src/features/filters/hooks/useFilterState.clienttest.ts
+  s_a9dd7c06ea70a1::t_690e8dc2db99ee 1-84
+web/src/features/filters/hooks/useFilterState.ts
+  s_a9dd7c06ea70a1::t_690e8dc2db99ee 39,88-95,100-102
+web/src/features/filters/components/multi-select.clienttest.tsx
+  s_a9dd7c06ea70a1::t_690e8dc2db99ee 1-311
+web/src/features/filters/components/multi-select.tsx
+  s_a9dd7c06ea70a1::t_690e8dc2db99ee 33-40,53,64-71,87,89-93,96-98,103,105,109,119-121,123-125,213,307,309,323-325
+web/src/features/filters/components/filter-builder.tsx
+  s_a9dd7c06ea70a1::t_690e8dc2db99ee 1006
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.16",
+  "base_commit_sha": "0fcf446b28bc9ae559085349f952317250d76eaf",
+  "prompts": {},
+  "sessions": {
+    "s_a9dd7c06ea70a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "24df9dec-5854-45cf-8fc4-bd6edc1ebc81",
+        "model": "claude-opus-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
