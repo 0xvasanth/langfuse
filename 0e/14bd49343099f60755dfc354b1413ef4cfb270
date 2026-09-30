@@ -1,0 +1,45 @@
+web/src/features/filters/components/filter-builder.tsx
+  s_1d124ffb182773::t_752c00f4a7d777 1046
+web/src/features/filters/components/multi-select.tsx
+  s_1d124ffb182773::t_f6a2257131154c 98,100-104,107-108,111-113,118,120,124
+  s_1d124ffb182773::t_34582e75fc7d18 60
+  s_1d124ffb182773::t_eeac3b74eb9926 349,351
+  s_1d124ffb182773::t_184ff1e8558894 365-367
+  s_1d124ffb182773::t_e1f66fe190099f 134-136,138-140
+  s_1d124ffb182773::t_4dd4fbe40b073e 37-44
+  s_1d124ffb182773::t_567133650457b9 75-82
+web/src/features/filters/hooks/useFilterState.ts
+  s_1d124ffb182773::t_840bc4ca8cd369 87-94,99-101
+packages/shared/src/server/tableMappings/mapEventsTable.ts
+  s_1d124ffb182773::t_39778ea7c0c8a4 281-285
+packages/shared/src/server/queries/clickhouse-sql/event-filter-options.golden.test.ts
+  s_1d124ffb182773::t_8d9f4625f80681 124-154
+  s_1d124ffb182773::t_d547a5aad5aa2d 33
+packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
+  s_1d124ffb182773::t_5b6750ccef2775 339-375
+  s_1d124ffb182773::t_f65921bf57f9f8 15-16
+packages/shared/src/server/queries/clickhouse-sql/event-filter-options.ts
+  s_1d124ffb182773::t_93da9bf8611a55 625-632,637-640,644
+  s_1d124ffb182773::t_80b32710aa1d19 58-64,71
+  s_1d124ffb182773::t_1281b82a8d7c4d 370-375,379-382
+  s_1d124ffb182773::t_08b1a644ba00aa 633-634,642-643,645
+  s_1d124ffb182773::t_6c111f67631a00 109-111
+  s_1d124ffb182773::t_0fd380edc8293a 339-341
+  s_1d124ffb182773::t_e0d76af8a30735 335-336,352-353,366-367,393-394,466-467,609-610,669-670
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "0e14bd49343099f60755dfc354b1413ef4cfb270",
+  "prompts": {},
+  "sessions": {
+    "s_1d124ffb182773": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9bb0ed0a-6926-4ff4-9dea-cadb2d67c1c5",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
