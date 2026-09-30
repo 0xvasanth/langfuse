@@ -10,6 +10,7 @@ web/src/features/filters/components/multi-select.tsx
   s_1d124ffb182773::t_567133650457b9 76-83
 web/src/features/filters/hooks/useFilterState.ts
   s_1d124ffb182773::t_840bc4ca8cd369 87-94
+  s_1d124ffb182773::t_16f902644298e4 100-102
 packages/shared/src/server/tableMappings/mapEventsTable.ts
   s_1d124ffb182773::t_39778ea7c0c8a4 281-285
 packages/shared/src/server/queries/clickhouse-sql/event-filter-options.golden.test.ts
