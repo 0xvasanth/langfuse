@@ -124,12 +124,20 @@ export const resolveProjectMedia: EvaluatorMediaResolver = async ({
   };
 };
 
+/**
+ * An explicitly configured transport always wins. Otherwise self-hosted
+ * deployments default to inline media and Langfuse Cloud to signed URLs.
+ */
 export function resolveEvaluatorMediaTransport(params: {
   configured: EvaluatorMediaTransport | undefined;
   cloudRegion: string | undefined;
+  adapter?: LLMAdapter;
 }): EvaluatorMediaTransport {
   if (params.configured) return params.configured;
-  return params.cloudRegion ? "url" : "inline";
+  if (!params.cloudRegion) return "inline";
+  // Bedrock Converse takes media as bytes or s3:// locations, never a signed
+  // https URL, so the URL default would fail every Bedrock call with media.
+  return params.adapter === LLMAdapter.Bedrock ? "inline" : "url";
 }
 
 async function fetchMediaBytes(
@@ -194,6 +202,7 @@ export async function compileLangfuseMediaMessages(params: {
     resolveEvaluatorMediaTransport({
       configured: env.LANGFUSE_EVALUATOR_MEDIA_TRANSPORT,
       cloudRegion: env.NEXT_PUBLIC_LANGFUSE_CLOUD_REGION,
+      adapter: params.adapter,
     });
   if (transport === "disabled") {
     const messages = mapChatMessagesToModelMessages(params.messages, {

@@ -463,6 +463,22 @@ describe("resolveEvaluatorMediaTransport", () => {
       );
     },
   );
+
+  it.each([
+    [undefined, "EU", LLMAdapter.Bedrock, "inline"],
+    [undefined, "EU", LLMAdapter.OpenAI, "url"],
+    [undefined, "EU", LLMAdapter.Anthropic, "url"],
+    [undefined, undefined, LLMAdapter.Bedrock, "inline"],
+    ["url", "EU", LLMAdapter.Bedrock, "url"],
+    ["disabled", "EU", LLMAdapter.Bedrock, "disabled"],
+  ] as const)(
+    "resolves configured=%s cloudRegion=%s adapter=%s to %s",
+    (configured, cloudRegion, adapter, expected) => {
+      expect(
+        resolveEvaluatorMediaTransport({ configured, cloudRegion, adapter }),
+      ).toBe(expected);
+    },
+  );
 });
 
 describe("resolveProjectMedia", () => {

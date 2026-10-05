@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import type { ModelMessage } from "ai";
+
 import { encrypt } from "../../../encryption";
 import { env } from "../../../env";
 import { VERTEXAI_USE_DEFAULT_CREDENTIALS } from "../../../interfaces/customLLMProviderConfigSchemas";
@@ -17,6 +19,7 @@ import {
   generateLLMText,
   mapLegacyLLMCompletionParams,
 } from "../llmText";
+import { compileLangfuseMediaMessages } from "../mediaMessages";
 
 // Request-shape coverage exercises the real provider packages while replacing
 // the separately tested secure transport with a capture fetch.
@@ -756,6 +759,7 @@ describe("AI SDK request shapes", () => {
     model?: string;
     output?: ReturnType<typeof createLLMOutput>;
     response?: unknown | ((request: CapturedRequest) => unknown);
+    providerMessages?: ModelMessage[];
   }) {
     const modelParams: ModelParams = {
       provider: "bedrock",
@@ -787,6 +791,9 @@ describe("AI SDK request shapes", () => {
       }),
       timeout: 10_000,
       output: params?.output,
+      ...(params?.providerMessages
+        ? { messages: params.providerMessages }
+        : {}),
     });
 
     if (!params?.output) {
@@ -901,6 +908,54 @@ describe("AI SDK request shapes", () => {
     expect(JSON.stringify(request.body)).toContain(
       "You MUST answer with only a JSON object",
     );
+  });
+
+  it("Bedrock: Langfuse Cloud's default media transport sends referenced media as bytes", async () => {
+    const original = {
+      LANGFUSE_EVALUATOR_MEDIA_TRANSPORT:
+        env.LANGFUSE_EVALUATOR_MEDIA_TRANSPORT,
+      NEXT_PUBLIC_LANGFUSE_CLOUD_REGION: env.NEXT_PUBLIC_LANGFUSE_CLOUD_REGION,
+    };
+    Object.assign(env, {
+      LANGFUSE_EVALUATOR_MEDIA_TRANSPORT: undefined,
+      NEXT_PUBLIC_LANGFUSE_CLOUD_REGION: "eu",
+    });
+
+    try {
+      const { providerMessages } = await compileLangfuseMediaMessages({
+        projectId: "project-1",
+        messages: [
+          {
+            type: ChatMessageType.User,
+            role: ChatMessageRole.User,
+            content:
+              "Describe @@@langfuseMedia:type=image/jpeg|id=image-1|source=base64@@@",
+          },
+        ],
+        adapter: LLMAdapter.Bedrock,
+        resolveMedia: async () => ({
+          url: "https://signed.example/image-1?signature=secret",
+          mediaType: "image/jpeg",
+          contentLength: 3,
+        }),
+        fetchMedia: async () => new Uint8Array([1, 2, 3]),
+      });
+
+      const { request } = await runBedrockCompletion({ providerMessages });
+
+      // Converse takes image bytes; a signed https URL never reaches the model.
+      expect(request.body.messages).toEqual([
+        {
+          role: "user",
+          content: [
+            { text: "Describe " },
+            { image: { format: "jpeg", source: { bytes: "AQID" } } },
+          ],
+        },
+      ]);
+    } finally {
+      Object.assign(env, original);
+    }
   });
 
   it("Bedrock: tenant credentials suppress server-level env auth fallbacks", async () => {
