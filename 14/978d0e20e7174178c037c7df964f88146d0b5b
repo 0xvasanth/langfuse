@@ -1,0 +1,25 @@
+packages/shared/src/server/llm/mediaMessages.test.ts
+  s_2923a48bd0d93d::t_0509ca2fa8c231 466-481
+packages/shared/src/server/llm/mediaMessages.ts
+  s_2923a48bd0d93d::t_0567d671641c31 127,130,134,137,205
+  s_2923a48bd0d93d::t_cffab2817f5a4a 128-129,138-140
+packages/shared/src/server/llm/ai-sdk/requestShape.test.ts
+  s_2923a48bd0d93d::t_0509ca2fa8c231 3-4,22,762,794-796,913-958
+  s_2923a48bd0d93d::t_8eca7a6ccd0c68 959-960
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "14978d0e20e7174178c037c7df964f88146d0b5b",
+  "prompts": {},
+  "sessions": {
+    "s_2923a48bd0d93d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f184a6bd-78b3-4172-8534-910b42821e1f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
