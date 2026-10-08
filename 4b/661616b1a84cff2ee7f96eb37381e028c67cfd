@@ -1,0 +1,19 @@
+web/src/features/traces/components/VirtualizedTree.tsx
+  s_0624b8d5b27e25::t_fc478f6972b53c 143-146,148-151
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4b661616b1a84cff2ee7f96eb37381e028c67cfd",
+  "prompts": {},
+  "sessions": {
+    "s_0624b8d5b27e25": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8e27ae5a-ca81-4dfb-9549-ab6c49188ee2",
+        "model": "unknown"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
