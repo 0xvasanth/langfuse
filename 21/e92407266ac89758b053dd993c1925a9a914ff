@@ -1,0 +1,17 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "21e92407266ac89758b053dd993c1925a9a914ff",
+  "prompts": {},
+  "sessions": {
+    "s_623e2b63fa8ed2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "adae3f79-b5cb-4d0e-9214-13c7fb3ede65",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
