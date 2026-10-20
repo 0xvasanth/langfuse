@@ -19,6 +19,7 @@ packages/shared/src/server/queries/clickhouse-sql/event-filter-options.golden.te
 packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
   s_1d124ffb182773::t_5b6750ccef2775 340,356-391
   s_1d124ffb182773::t_f65921bf57f9f8 16-17
+  s_623e2b63fa8ed2::t_6fa0df8dcabc23 355
 packages/shared/src/server/queries/clickhouse-sql/event-filter-options.ts
   s_1d124ffb182773::t_93da9bf8611a55 641-648,653-656,660
   s_1d124ffb182773::t_80b32710aa1d19 58-64,71
@@ -39,6 +40,14 @@ packages/shared/src/server/queries/clickhouse-sql/event-filter-options.ts
         "tool": "claude",
         "id": "9bb0ed0a-6926-4ff4-9dea-cadb2d67c1c5",
         "model": "claude-opus-4-8"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    },
+    "s_623e2b63fa8ed2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "adae3f79-b5cb-4d0e-9214-13c7fb3ede65",
+        "model": "claude-sonnet-5"
       },
       "human_author": "vasanth <itsparser@gmail.com>"
     }
