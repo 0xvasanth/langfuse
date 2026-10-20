@@ -1,0 +1,25 @@
+packages/shared/src/server/queries/clickhouse-sql/event-filter-options.ts
+  s_623e2b63fa8ed2::t_4c9a4a02ae2933 491-497
+web/src/__tests__/server/event-query-builder.servertest.ts
+  s_623e2b63fa8ed2::t_34a0671a7b2794 601-603
+  s_623e2b63fa8ed2::t_d8395fc3b964d2 557
+  s_623e2b63fa8ed2::t_4291306a507584 490-510
+  s_623e2b63fa8ed2::t_d1abb899c80c64 473
+  s_623e2b63fa8ed2::t_1b0f45e0ec782c 573-575
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6b2001bf5d97ffc57a0a9d003d04be343fe71672",
+  "prompts": {},
+  "sessions": {
+    "s_623e2b63fa8ed2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "adae3f79-b5cb-4d0e-9214-13c7fb3ede65",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
