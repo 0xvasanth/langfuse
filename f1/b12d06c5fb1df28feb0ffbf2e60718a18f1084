@@ -1,0 +1,27 @@
+packages/shared/src/server/queries/clickhouse-sql/clickhouse-filter.events-full-routing.test.ts
+  s_1d124ffb182773::t_5b6750ccef2775 338
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "f1b12d06c5fb1df28feb0ffbf2e60718a18f1084",
+  "prompts": {},
+  "sessions": {
+    "s_1d124ffb182773": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9bb0ed0a-6926-4ff4-9dea-cadb2d67c1c5",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    },
+    "s_623e2b63fa8ed2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "adae3f79-b5cb-4d0e-9214-13c7fb3ede65",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
