@@ -1,0 +1,29 @@
+web/src/features/playground/page/components/SaveToPromptButton.tsx
+  s_1cb9d291358f5c::t_3295c3b69a08c4 29,50-53,132-142,192
+web/src/features/prompts/components/NewPromptForm/NewPromptForm.clienttest.tsx
+  s_1cb9d291358f5c::t_1239f19f771d59 48-50
+  s_1cb9d291358f5c::t_c403a90a473f05 1-47,51-87,99-106,110-132
+  s_1cb9d291358f5c::t_ad07219d3c2ed2 107-109
+  s_1cb9d291358f5c::t_97f78ab5211a88 88-98
+web/src/features/prompts/components/NewPromptForm/NewPromptForm.tsx
+  s_1cb9d291358f5c::t_ad07219d3c2ed2 45,60-63,464-470,480,492,502-505
+web/src/features/playground/page/components/SaveToPromptButton.clienttest.tsx
+  s_1cb9d291358f5c::t_336b211c38078e 1-54,67-127
+  s_1cb9d291358f5c::t_05b4c5e663d2b8 55-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "030b9674359b44dddf6c8f6b20fc87c02fc20e7a",
+  "prompts": {},
+  "sessions": {
+    "s_1cb9d291358f5c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "51f9dada-a493-4b03-b0c6-66f4c4037cad",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
