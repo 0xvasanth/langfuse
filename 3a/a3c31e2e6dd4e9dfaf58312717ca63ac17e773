@@ -1,0 +1,26 @@
+web/src/features/command-k-menu/CommandMenu.tsx
+  s_38bfd87067c75e::t_91312ff5183418 855-859,933,942,1194,1371-1384
+  s_38bfd87067c75e::t_16015ca5f84e24 901-904
+  s_38bfd87067c75e::t_4dc8d593877380 1385-1386
+web/src/features/command-k-menu/CommandMenu.clienttest.ts
+  s_38bfd87067c75e::t_16015ca5f84e24 297-299,304
+  s_38bfd87067c75e::t_526c3131a51b2d 6
+  s_38bfd87067c75e::t_cc039f10b4a551 292-296,300-303,305-322
+  s_38bfd87067c75e::t_99116a04f02e2f 323
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3aa3c31e2e6dd4e9dfaf58312717ca63ac17e773",
+  "prompts": {},
+  "sessions": {
+    "s_38bfd87067c75e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9a01fc17-bbc3-4797-843e-f35532bac136",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
