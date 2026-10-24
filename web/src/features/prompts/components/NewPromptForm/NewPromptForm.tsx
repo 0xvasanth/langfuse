@@ -42,6 +42,7 @@ import { PromptVariableListPreview } from "@/src/features/prompts/components/Pro
 import { CodeMirrorEditor } from "@/src/components/editor/CodeMirrorEditor";
 import { PromptLinkingEditor } from "@/src/components/editor/PromptLinkingEditor";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
+import { useHasProjectAccess } from "@/src/features/rbac";
 import { usePlaygroundCache } from "@/src/features/playground";
 import { useQueryParam } from "use-query-params";
 import { usePromptNameValidation } from "@/src/features/prompts/hooks/usePromptNameValidation";
@@ -56,6 +57,10 @@ type NewPromptFormProps = {
 export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
   const { onFormSuccess, initialPrompt } = props;
   const projectId = useProjectIdFromURL();
+  const hasCUDAccess = useHasProjectAccess({
+    projectId,
+    scope: "prompts:CUD",
+  });
   const [shouldLoadPlaygroundCache] = useQueryParam("loadPlaygroundCache");
   const [folderPath] = useQueryParam("folder");
   const [formError, setFormError] = useState<string | null>(null);
@@ -456,6 +461,13 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
           )}
         />
 
+        {!hasCUDAccess && (
+          <p className="text-muted-foreground text-center text-sm">
+            You do not have permission to create prompts in this project. Please
+            ask your admin to grant you access.
+          </p>
+        )}
+
         {initialPrompt ? (
           <div className="flex flex-col gap-2">
             <ReviewPromptDialog
@@ -465,7 +477,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
               onConfirm={form.handleSubmit(onSubmit)}
             >
               <Button
-                disabled={!form.formState.isValid}
+                disabled={!hasCUDAccess || !form.formState.isValid}
                 variant="secondary"
                 className="w-full"
               >
@@ -477,7 +489,7 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
               type="submit"
               loading={createPromptMutation.isPending}
               className="w-full"
-              disabled={!form.formState.isValid}
+              disabled={!hasCUDAccess || !form.formState.isValid}
             >
               Save new prompt version
             </Button>
@@ -487,9 +499,10 @@ export const NewPromptForm: React.FC<NewPromptFormProps> = (props) => {
             type="submit"
             loading={createPromptMutation.isPending}
             className="w-full"
-            disabled={Boolean(
-              !initialPrompt && form.formState.errors.name?.message,
-            )} // Disable button if prompt name already exists. Check is dynamic and not part of zod schema
+            disabled={
+              !hasCUDAccess ||
+              Boolean(!initialPrompt && form.formState.errors.name?.message) // Disable button if prompt name already exists. Check is dynamic and not part of zod schema
+            }
           >
             Create prompt
           </Button>

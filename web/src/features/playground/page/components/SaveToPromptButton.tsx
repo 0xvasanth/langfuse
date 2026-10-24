@@ -26,6 +26,7 @@ import {
 import { usePlaygroundContext } from "@/src/features/playground/page/context/PlaygroundProvider";
 import usePlaygroundCache from "@/src/features/playground/page/hooks/usePlaygroundCache";
 import { usePostHogClientCapture } from "@/src/features/posthog-analytics";
+import { useHasProjectAccess } from "@/src/features/rbac";
 import useProjectIdFromURL from "@/src/hooks/useProjectIdFromURL";
 import { api } from "@/src/utils/api";
 import { cn } from "@/src/utils/tailwind";
@@ -46,6 +47,10 @@ export const SaveToPromptButton: React.FC<SaveToPromptButtonProps> = ({
   const router = useRouter();
   const projectId = useProjectIdFromURL();
   const { setPlaygroundCache } = usePlaygroundCache();
+  const hasCUDAccess = useHasProjectAccess({
+    projectId,
+    scope: "prompts:CUD",
+  });
 
   const allChatPromptNamesWithIds =
     api.prompts.allNames
@@ -124,7 +129,17 @@ export const SaveToPromptButton: React.FC<SaveToPromptButtonProps> = ({
           </Button>
         </PopoverTrigger>
         <PopoverContent>
-          <Button className="mt-2 w-full" onClick={handleNewPrompt}>
+          {!hasCUDAccess && (
+            <p className="text-muted-foreground text-xs">
+              You do not have permission to create prompts in this project.
+              Please ask your admin to grant you access.
+            </p>
+          )}
+          <Button
+            className="mt-2 w-full"
+            disabled={!hasCUDAccess}
+            onClick={handleNewPrompt}
+          >
             Save as new prompt
           </Button>
           <Divider />
@@ -174,7 +189,7 @@ export const SaveToPromptButton: React.FC<SaveToPromptButtonProps> = ({
           </InputCommand>
           <Button
             className="mt-2 w-full"
-            disabled={!Boolean(selectedPromptId)}
+            disabled={!hasCUDAccess || !Boolean(selectedPromptId)}
             onClick={handleNewPromptVersion}
           >
             Save as new prompt version
