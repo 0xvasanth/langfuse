@@ -3,6 +3,7 @@ import {
   buildCreateActions,
   buildPageShortcuts,
   getEntityBaseUrl,
+  getEntityServerSearch,
   getIdNavigationItem,
   getRecentPickAnalytics,
   getSearchAnalytics,
@@ -286,5 +287,37 @@ describe("toEntityGroup", () => {
       toEntityGroup("evaluator", null, [{ id: "e1", name: "Toxicity" }], "")
         .items,
     ).toEqual([]);
+  });
+});
+
+describe("getEntityServerSearch", () => {
+  it("drops terms the entity keywords already match", () => {
+    expect(getEntityServerSearch("evaluator", "eval")).toBeUndefined();
+    expect(getEntityServerSearch("evaluator", "Evaluator")).toBeUndefined();
+    expect(getEntityServerSearch("evaluator", "eval answer_relevance")).toBe(
+      "answer_relevance",
+    );
+  });
+
+  it("keeps searches that only name the entity", () => {
+    expect(getEntityServerSearch("evaluator", " Toxicity ")).toBe("Toxicity");
+    expect(getEntityServerSearch("evaluator", "is cursing")).toBe("is cursing");
+  });
+
+  it("is undefined for an empty search", () => {
+    expect(getEntityServerSearch("evaluator", "")).toBeUndefined();
+    expect(getEntityServerSearch("evaluator", "   ")).toBeUndefined();
+  });
+
+  it("returns rows the client filter keeps for the original search", () => {
+    const rows = [{ id: "e1", name: "answer_relevance" }];
+    const serverSearch = getEntityServerSearch("evaluator", "eval answer");
+    const serverRows = rows.filter((row) =>
+      row.name.includes(serverSearch ?? ""),
+    );
+
+    expect(
+      toEntityGroup("evaluator", "/e", serverRows, "eval answer").items,
+    ).toHaveLength(1);
   });
 });

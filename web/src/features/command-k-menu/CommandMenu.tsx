@@ -852,6 +852,11 @@ function CommandMenuComponent({
   const isSearching = search !== "";
   const idNavigationItem = getIdNavigationItem(search, project?.id, isV4);
 
+  const resetSearch = () => {
+    setSearch("");
+    setDebouncedSearch("");
+  };
+
   const debouncedSearchChange = useDebounce(
     (value: string) => {
       setDebouncedSearch(value);
@@ -893,7 +898,10 @@ function CommandMenuComponent({
         }
         const nextOpen = !open;
         setOpen(nextOpen);
-        if (!nextOpen) setSearch("");
+        if (!nextOpen) {
+          setSearch("");
+          setDebouncedSearch("");
+        }
       }
     };
     document.addEventListener("keydown", down);
@@ -922,7 +930,7 @@ function CommandMenuComponent({
 
   const handleNavigate = (entry?: RecentEntry) => {
     if (entry) addRecent(entry);
-    setSearch("");
+    resetSearch();
     setOpen(false);
   };
 
@@ -931,7 +939,7 @@ function CommandMenuComponent({
       open={open}
       onOpenChange={(nextOpen) => {
         setOpen(nextOpen);
-        if (!nextOpen) setSearch("");
+        if (!nextOpen) resetSearch();
       }}
       filter={(value, search, keywords) =>
         matchesSearch(`${value} ${keywords?.join(" ")}`, search) ? 1 : 0
@@ -1183,7 +1191,7 @@ function useEntityGroups(
     {
       projectId,
       limit: ENTITY_LIMIT,
-      search: debouncedSearch.trim() || undefined,
+      search: getEntityServerSearch("evaluator", debouncedSearch),
     },
     {
       enabled: open && evaluatorsUrl !== null,
@@ -1358,6 +1366,22 @@ export function toEntityGroup(
       url: `${baseUrl}/${encodeURIComponent(row[pathKey])}`,
     })),
   };
+}
+
+/**
+ * The search to send to a server-side name filter. Terms the entity keywords
+ * already match are dropped, since the client filter keeps every row for them.
+ */
+export function getEntityServerSearch(
+  type: EntityType,
+  search: string,
+): string | undefined {
+  const keywordText = ENTITY_GROUPS[type].keywords.join(" ");
+  const nameTerms = search
+    .trim()
+    .split(" ")
+    .filter((term) => term && !matchesSearch(keywordText, term));
+  return nameTerms.join(" ") || undefined;
 }
 
 /** Every space-separated search term appears in the text, ignoring case. */
