@@ -48,6 +48,41 @@ describe("formatMetric", () => {
     });
   });
 
+  it("limits unconstrained compact suffix values to two fraction digits", () => {
+    expect(formatMetric(8_862, { style: "compact" })).toEqual({
+      main: "8.86",
+      suffix: "K",
+    });
+    expect(formatMetric(12_345, { style: "compact" })).toEqual({
+      main: "12.35",
+      suffix: "K",
+    });
+    expect(formatMetric(1_234_567, { style: "compact" })).toEqual({
+      main: "1.23",
+      suffix: "M",
+    });
+    expect(formatMetric(1_500, { style: "compact" })).toEqual({
+      main: "1.5",
+      suffix: "K",
+    });
+    expect(formatMetric(-3_551, { style: "compact" })).toEqual({
+      negative: true,
+      main: "3.55",
+      suffix: "K",
+    });
+  });
+
+  it("normalizes unconstrained compact units when rounding reaches the next suffix", () => {
+    expect(formatMetric(999_999, { style: "compact" })).toEqual({
+      main: "1",
+      suffix: "M",
+    });
+    expect(formatMetric(999_995_000, { style: "compact" })).toEqual({
+      main: "1",
+      suffix: "B",
+    });
+  });
+
   it("normalizes compact units when constrained rounding reaches the next suffix", () => {
     expect(
       formatMetric(999_999, { style: "compact", maxCharacters: 4 }),

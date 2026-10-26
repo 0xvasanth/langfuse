@@ -239,6 +239,8 @@ const compactUnits = [
   [1e3, "K"],
 ] as const;
 
+const compactSuffixMaxFractionDigits = 2;
+
 const formatCompactMetric = (
   value: number,
   maxCharacters?: number,
@@ -251,7 +253,7 @@ const formatCompactMetric = (
 
     const formatted = formatFixedMetric(
       value / divisor,
-      3,
+      compactSuffixMaxFractionDigits,
       suffix,
       maxCharacters,
     );
@@ -260,7 +262,7 @@ const formatCompactMetric = (
       const [nextDivisor, nextSuffix] = compactUnits[i - 1];
       return formatFixedMetric(
         value / nextDivisor,
-        3,
+        compactSuffixMaxFractionDigits,
         nextSuffix,
         maxCharacters,
       );
