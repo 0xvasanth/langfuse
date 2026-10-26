@@ -1,0 +1,21 @@
+web/src/features/widgets/chart-library/utils.clienttest.ts
+  s_836a6b7753c12b::t_3b1ab79bb08ed0 51-85
+web/src/features/widgets/chart-library/utils.ts
+  s_836a6b7753c12b::t_3daa96058d7ad5 242-243,256,265
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "faa66b84885a0cf3b42a5d4d6821209e7b2acbda",
+  "prompts": {},
+  "sessions": {
+    "s_836a6b7753c12b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6a136c75-2800-4f87-bb36-06a7f2b2cb52",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
