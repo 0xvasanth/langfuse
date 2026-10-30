@@ -51,12 +51,7 @@ const parseSentinelRequest = (
 /** crossRegionRedirect bounces to the cookie's origin when it is a sibling region the session lives on. */
 const crossRegionRedirect = (req: SentinelContext) => {
   const { cookie, origin, resolvedUrl } = req;
-  if (
-    cookie &&
-    origin &&
-    cookie.origin !== origin &&
-    sameRegistrableDomain(cookie.origin, origin)
-  ) {
+  if (cookie && origin && isSiblingRegion(cookie.origin, origin)) {
     return redirect(`${cookie.origin}${resolvedUrl}`);
   }
 };
@@ -99,18 +94,21 @@ const redirect = (destination: string): GetServerSidePropsResult<never> => ({
   redirect: { destination, permanent: false },
 });
 
-/** sameRegistrableDomain returns true when two origins share the last-two-label registrable domain. */
-const sameRegistrableDomain = (originA: string, originB: string): boolean => {
-  const registrableDomain = (origin: string): string | null => {
+/** isSiblingRegion returns true when two origins have different hostnames that share the last-two-label registrable domain; a scheme or port change on the same hostname is not a sibling region. */
+const isSiblingRegion = (originA: string, originB: string): boolean => {
+  const hostname = (origin: string): string | null => {
     try {
-      return new URL(origin).hostname.split(".").slice(-2).join(".");
+      return new URL(origin).hostname;
     } catch {
       return null;
     }
   };
-  const domainA = registrableDomain(originA);
-  const domainB = registrableDomain(originB);
-  return domainA !== null && domainA === domainB;
+  const hostA = hostname(originA);
+  const hostB = hostname(originB);
+  if (hostA === null || hostB === null || hostA === hostB) return false;
+  const registrableDomain = (host: string) =>
+    host.split(".").slice(-2).join(".");
+  return registrableDomain(hostA) === registrableDomain(hostB);
 };
 
 /** sentinelPathPrefix is the route prefix stripped to recover the trailing path and query. */

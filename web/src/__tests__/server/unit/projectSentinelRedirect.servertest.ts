@@ -271,6 +271,66 @@ describe("sentinel redirect /project/~/", () => {
     });
   });
 
+  it("unauthenticated, same host with other scheme: stays on request origin and signs in", async () => {
+    getServerAuthSessionMock.mockResolvedValue(null);
+
+    const result = await getServerSideProps(
+      makeCtx({ path: ["traces"] }, "/project/~/traces", {
+        host: "langfuse.example.com",
+        proto: "http",
+        cookie: {
+          origin: "https://langfuse.example.com",
+          projectId: "example-project",
+        },
+      }),
+    );
+
+    expect(result).toEqual({
+      redirect: {
+        destination: `/auth/sign-in?callbackUrl=${encodeURIComponent("/project/~/traces")}`,
+        permanent: false,
+      },
+    });
+  });
+
+  it("same host with other scheme: does not bounce, falls back to first project", async () => {
+    getServerAuthSessionMock.mockResolvedValue(makeSession(["proj-first"]));
+
+    const result = await getServerSideProps(
+      makeCtx({ path: ["traces"] }, "/project/~/traces", {
+        host: "langfuse.example.com",
+        proto: "https",
+        cookie: {
+          origin: "http://langfuse.example.com",
+          projectId: "proj-stale",
+        },
+      }),
+    );
+
+    expect(result).toEqual({
+      redirect: { destination: "/project/proj-first/traces", permanent: false },
+    });
+  });
+
+  it("same host with other port: does not bounce, falls back to first project", async () => {
+    getServerAuthSessionMock.mockResolvedValue(makeSession(["proj-first"]));
+
+    const result = await getServerSideProps(
+      makeCtx({ path: ["traces"] }, "/project/~/traces", {
+        host: "localhost:3000",
+        proto: "http",
+        cookie: {
+          origin: "http://localhost:3001",
+          projectId: "proj-stale",
+        },
+      }),
+    );
+
+    expect(result).toEqual({
+      redirect: { destination: "/project/proj-first/traces", permanent: false },
+    });
+  });
+
   it("same-origin cookie: preserves query string on local redirect", async () => {
     getServerAuthSessionMock.mockResolvedValue(makeSession(["proj-last"]));
 
