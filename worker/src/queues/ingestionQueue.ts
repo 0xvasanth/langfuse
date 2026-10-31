@@ -261,7 +261,7 @@ export const ingestionQueueProcessorBuilder = (
               .map((e) => e.file.split("/").pop() ?? "")
               .map((key) =>
                 redis!.set(
-                  `langfuse:ingestion:recently-processed:${job.data.payload.authCheck.scope.projectId}:${job.data.payload.data.type}:${job.data.payload.data.eventBodyId}:${key.replace(".json", "")}`,
+                  `langfuse:ingestion:recently-processed:${job.data.payload.authCheck.scope.projectId}:${job.data.payload.data.type}:${job.data.payload.data.eventBodyId}:${key.replace(/\.json$/, "")}`,
                   "1",
                   "EX",
                   60 * 5, // 5 minutes
