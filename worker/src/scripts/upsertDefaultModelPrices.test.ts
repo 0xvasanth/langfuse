@@ -195,6 +195,80 @@ describe("default OpenAI cache-write prices", () => {
     },
   );
 
+  it.each([
+    {
+      api: "Responses",
+      usage: {
+        input_tokens: 1557,
+        output_tokens: 5,
+        total_tokens: 1562,
+        input_tokens_details: {
+          cached_tokens: 0,
+          cache_write_tokens: 1529,
+          cache_write_tokens_details: {
+            ttl_30m_tokens: 0,
+            ttl_12h_tokens: 1529,
+          },
+        },
+        output_tokens_details: { reasoning_tokens: 0 },
+      },
+    },
+    {
+      api: "Chat Completions",
+      usage: {
+        prompt_tokens: 1557,
+        completion_tokens: 5,
+        total_tokens: 1562,
+        prompt_tokens_details: {
+          cached_tokens: 0,
+          cache_write_tokens: 1529,
+          cache_write_tokens_details: {
+            ttl_30m_tokens: 0,
+            ttl_12h_tokens: 1529,
+          },
+        },
+        completion_tokens_details: { reasoning_tokens: 0 },
+      },
+    },
+  ])(
+    "prices $api usage carrying a nested cache-write TTL breakdown",
+    ({ usage }) => {
+      const model = defaultModelPrices.find(
+        (defaultModel) => defaultModel.modelName === "gpt-6-sol",
+      );
+      expect(model).toBeDefined();
+      if (!model) return;
+
+      const usageDetails = UsageDetails.parse(usage) as Record<string, number>;
+
+      expect(usageDetails).toEqual({
+        input: 28,
+        input_cached_tokens: 0,
+        input_cache_write_tokens: 1529,
+        output: 5,
+        output_reasoning_tokens: 0,
+        total: 1562,
+      });
+
+      const match = matchPricingTier(
+        model.pricingTiers.map((tier) => ({
+          ...tier,
+          conditions:
+            tier.conditions as DefaultModelPrice["pricingTiers"][number]["conditions"],
+          prices: Object.entries(tier.prices).map(([usageType, price]) => ({
+            usageType,
+            price: new Decimal(price),
+          })),
+        })),
+        usageDetails,
+      );
+      const unpricedUsageKeys = Object.keys(usageDetails).filter(
+        (usageType) => usageType !== "total" && !match?.prices[usageType],
+      );
+      expect(unpricedUsageKeys).toEqual([]);
+    },
+  );
+
   it.each(["gpt-5.4", "gpt-5.4-2026-03-05", "gpt-5.5-2026-04-23"])(
     "counts flat cache writes toward the %s large-context threshold",
     (modelName) => {

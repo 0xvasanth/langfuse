@@ -150,6 +150,23 @@ function splitAnthropicCacheCreation(
   }
 }
 
+// OpenAI token-detail breakdowns map each detail to a token count. Some details
+// carry a nested object instead, e.g. `cache_write_tokens_details` splits
+// `cache_write_tokens` by TTL. Those nested objects are accepted but not
+// normalized: the flat sibling count already covers the same tokens, so
+// adding them would count and price the tokens twice.
+const OpenAIUsageTokenDetails = z
+  .record(
+    z.string(),
+    z
+      .union([
+        z.number().int().nonnegative(),
+        z.record(z.string(), z.unknown()),
+      ])
+      .nullish(),
+  )
+  .nullish();
+
 // The OpenAI schemas accept unknown top-level keys: OpenAI-compatible providers
 // add fields such as `cost`, and rejecting those would route the payload to
 // `RawUsageDetails` and lose the normalization. Unknown keys are kept under the
@@ -159,12 +176,8 @@ const OpenAICompletionUsageSchema = z
     prompt_tokens: z.number().int().nonnegative(),
     completion_tokens: z.number().int().nonnegative(),
     total_tokens: z.number().int().nonnegative(),
-    prompt_tokens_details: z
-      .record(z.string(), z.number().int().nonnegative().nullish())
-      .nullish(),
-    completion_tokens_details: z
-      .record(z.string(), z.number().int().nonnegative().nullish())
-      .nullish(),
+    prompt_tokens_details: OpenAIUsageTokenDetails,
+    completion_tokens_details: OpenAIUsageTokenDetails,
   })
   .loose()
   .transform((v) => {
@@ -191,18 +204,18 @@ const OpenAICompletionUsageSchema = z
 
     if (prompt_tokens_details) {
       for (const [key, value] of Object.entries(prompt_tokens_details)) {
-        if (value !== null && value !== undefined) {
+        if (typeof value === "number") {
           result[`input_${key}`] = value;
-          result.input = Math.max(result.input - (value ?? 0), 0);
+          result.input = Math.max(result.input - value, 0);
         }
       }
     }
 
     if (completion_tokens_details) {
       for (const [key, value] of Object.entries(completion_tokens_details)) {
-        if (value !== null && value !== undefined) {
+        if (typeof value === "number") {
           result[`output_${key}`] = value;
-          result.output = Math.max(result.output - (value ?? 0), 0);
+          result.output = Math.max(result.output - value, 0);
         }
       }
     }
@@ -216,12 +229,8 @@ const OpenAIResponseUsageSchema = z
     input_tokens: z.number().int().nonnegative(),
     output_tokens: z.number().int().nonnegative(),
     total_tokens: z.number().int().nonnegative(),
-    input_tokens_details: z
-      .record(z.string(), z.number().int().nonnegative().nullish())
-      .nullish(),
-    output_tokens_details: z
-      .record(z.string(), z.number().int().nonnegative().nullish())
-      .nullish(),
+    input_tokens_details: OpenAIUsageTokenDetails,
+    output_tokens_details: OpenAIUsageTokenDetails,
   })
   .loose()
   .transform((v) => {
@@ -248,18 +257,18 @@ const OpenAIResponseUsageSchema = z
 
     if (input_tokens_details) {
       for (const [key, value] of Object.entries(input_tokens_details)) {
-        if (value !== null && value !== undefined) {
+        if (typeof value === "number") {
           result[`input_${key}`] = value;
-          result.input = Math.max(result.input - (value ?? 0), 0);
+          result.input = Math.max(result.input - value, 0);
         }
       }
     }
 
     if (output_tokens_details) {
       for (const [key, value] of Object.entries(output_tokens_details)) {
-        if (value !== null && value !== undefined) {
+        if (typeof value === "number") {
           result[`output_${key}`] = value;
-          result.output = Math.max(result.output - (value ?? 0), 0);
+          result.output = Math.max(result.output - value, 0);
         }
       }
     }
