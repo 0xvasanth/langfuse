@@ -1,0 +1,22 @@
+packages/shared/src/server/ingestion/types.ts
+  s_1fd90b6525b640::t_524540f1a105b7 153-169,179-180,207,209,216,218,232-233,260,262,269,271
+worker/src/scripts/upsertDefaultModelPrices.test.ts
+  s_1fd90b6525b640::t_91674e15c9ac55 208-211,225-228
+  s_1fd90b6525b640::t_89f283528965ac 198-207,212-224,229-271
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1b86372d2c59e48ebab75bb42ec77e583934272d",
+  "prompts": {},
+  "sessions": {
+    "s_1fd90b6525b640": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fea4c6e0-56f5-4800-a047-39bec31c7187",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "vasanth <itsparser@gmail.com>"
+    }
+  }
+}
